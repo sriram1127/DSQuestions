@@ -1,0 +1,35 @@
+// "static void main" must be defined in a public class.
+//Decode Strings
+public class Main {
+    public static void main(String[] args) {
+        Main obj = new Main();
+        obj.decodeStrings("123").forEach(System.out::println);
+    }
+    
+    private List<String> decodeStrings(String str) {
+        List<String> result = new ArrayList<>();
+        addString(str, 0, result, new StringBuilder());
+        return result;
+    }
+    
+    private void addString(String str, int idx, 
+                           List<String> result, StringBuilder sb) {
+        if(idx == str.length()) {
+            result.add(sb.toString());
+        } else {
+            if(str.charAt(idx) == '0') return;
+            char ch = (char)(str.charAt(idx)-'1' +'a');
+            addString(str, idx + 1, result, sb.append(ch));
+            sb.setLength(sb.length()-1);
+            if(idx < str.length()-1) {
+               int no = Integer.parseInt(str.substring(idx, idx+2));
+                if(no > 9 && no < 27) {
+                    ch = (char)(no +'a'-1);
+                    addString(str, idx + 2, result, sb.append(ch));
+                    sb.setLength(sb.length()-1);
+                } 
+            }
+            
+        }
+    }
+}
