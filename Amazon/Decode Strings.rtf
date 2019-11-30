@@ -1,0 +1,42 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1671\cocoasubrtf600
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 // "static void main" must be defined in a public class.\
+//Decode Strings\
+public class Main \{\
+    public static void main(String[] args) \{\
+        Main obj = new Main();\
+        obj.decodeStrings("123").forEach(System.out::println);\
+    \}\
+    \
+    private List<String> decodeStrings(String str) \{\
+        List<String> result = new ArrayList<>();\
+        addString(str, 0, result, new StringBuilder());\
+        return result;\
+    \}\
+    \
+    private void addString(String str, int idx, \
+                           List<String> result, StringBuilder sb) \{\
+        if(idx == str.length()) \{\
+            result.add(sb.toString());\
+        \} else \{\
+            if(str.charAt(idx) == '0') return;\
+            char ch = (char)(str.charAt(idx)-'1' +'a');\
+            addString(str, idx + 1, result, sb.append(ch));\
+            sb.setLength(sb.length()-1);\
+            if(idx < str.length()-1) \{\
+               int no = Integer.parseInt(str.substring(idx, idx+2));\
+                if(no > 9 && no < 27) \{\
+                    ch = (char)(no +'a'-1);\
+                    addString(str, idx + 2, result, sb.append(ch));\
+                    sb.setLength(sb.length()-1);\
+                \} \
+            \}\
+            \
+        \}\
+    \}\
+\}}
